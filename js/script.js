@@ -42,8 +42,11 @@ addBtn.addEventListener("click", addTaskToDom);
 
 //remove tasks from list!
 
-todoList.addEventListener("click", async (e) => {
-        todoList.removeChild(e.target.parentNode);
-});
+const removeTask = async (e) => {
+    const taskToRemove = e.target.parentElement;
+    taskToRemove.parentElement.removeChild(taskToRemove); 
+}
+
+todoList.addEventListener("click", removeTask);
 
 //werkt!!
