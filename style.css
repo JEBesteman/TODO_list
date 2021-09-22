@@ -3,16 +3,51 @@
   padding: 0;
   box-sizing: border-box;
 }
+body {
+  background-color: aquamarine;
+  font-family: sans-serif;
+  font-size: 20px;
+  min-height: 100vh;
+}
+
+header,
+nav {
+  min-height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+nav button,
+nav input {
+  padding: 10px;
+}
 
 .far {
   color: red;
   margin: 10px;
   font-size: 20px;
+  cursor: pointer;
 }
 
-.hidden {
-  display: none;
+.list-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 10px;
 }
-li {
+
+ul {
+  min-width: 350px;
+  background-color: beige;
+}
+
+ul li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   list-style: none;
+  border: 1px solid black;
+  padding: 5px 10px;
 }
