@@ -1,0 +1,18 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.far {
+  color: red;
+  margin: 10px;
+  font-size: 20px;
+}
+
+.hidden {
+  display: none;
+}
+li {
+  list-style: none;
+}
