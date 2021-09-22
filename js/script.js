@@ -42,18 +42,10 @@ addBtn.addEventListener("click", addTaskToDom);
 
 //remove tasks from list!
 
-// //verwijdert eerste element
 todoList.addEventListener("click", async (e) => {
     if (e.target = deleteBtn){
-        todoList.removeChild(todoList.firstChild);
+        todoList.removeChild(e.target.parentNode);
     }
 });
 
-
-// todoList.addEventListener("click", async (e) => {
-//     if (e.target = deleteBtn){
-//         todoList.removeChild(newLi);
-//     }
-// });
-// newLi not defined!!
-
+//werkt!!
