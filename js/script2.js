@@ -25,17 +25,14 @@ const addTaskToDom = async () => {
 //eventListeners
 
 
-
 const postNewTask = async () => {
     const todo = {decription: inputField.value, done: false};
-    const newTodo = await postTask(todo);
-    console.log(newTodo); //klopt
-    // const addNewTask = await addTaskToDom();
-    // const addNewTask = await addTaskToDom(newTodo);
-    // addTaskToDom();
-    await addTaskToDom(newTodo);
+    await postTask(todo);
+    // const newTodo = await postTask(todo);
+    // console.log(newTodo);
+    addTaskToDom();
+    // await addTaskToDom();
 };
-
 
 addBtn.addEventListener("click", postNewTask);
 
