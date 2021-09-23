@@ -19,7 +19,7 @@ const getData = async () => {
 //POST request
 const postTask = async () => {
     
-    const task = {description: task, done: false};
+    const task = {description: "go to the gym", done: false};
     
     try {
         const res = await fetch(url, {

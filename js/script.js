@@ -5,38 +5,63 @@ const addBtn = document.getElementById("addTaskBtn");
 const deleteBtn = document.getElementsByClassName("deleteBtn");
 
 
-const doSomethingWithData = async () => {
-    const data = await getData();
-    console.log(data);
+const getAllTasks = async () => {
+    const tasks = await getData();
+    return tasks;
 };
 
-doSomethingWithData();
+getAllTasks();
 
-const doSomethingWithTask = async () => {
-    const dataTask = await postTask();
-    console.log(dataTask);
+
+const postNewTask = async () => {
+    const newTodo = await postTask();
+    return newTodo;  
 };
-
-// doSomethingWithTask();
+// postNewTask();
 
 //add task to list 
-const addTaskToDom = () => {
+const addTaskToDom = (task) => {
     const newLi = document.createElement("li");
     const todo = document.createElement("span");
     todo.textContent = inputField.value;
     //todo.textContent = task.description hoe later te veranderen????
     const bin = document.createElement("i");
-    newLi.setAttribute("id", "._id")//koppelen aan id request
+    newLi.setAttribute("id", task._id)//koppelen aan id request
     bin.setAttribute("class", "deleteBtn far fa-trash-alt");
-    bin.setAttribute("id", "._id");
+    bin.setAttribute("id", task._id);
     newLi.appendChild(todo);
     newLi.appendChild(bin);
     todoList.appendChild(newLi);
     inputField.value = "";
     return newLi;
 };
+   
+
+//voegt wel toe aan lijst maar li id = undefined.....
+
+//werkt niet
+// const addTaskToDom = async () => {
+//     const tasks = await getData();
+//     tasks.forEach(task =>  {
+//     const newLi = document.createElement("li");
+//     const todo = document.createElement("span");
+//     todo.textContent = task.description;
+//     //todo.textContent = task.description hoe later te veranderen????
+//     const bin = document.createElement("i");
+//     newLi.setAttribute("id", `${task._id}`)//koppelen aan id request
+//     bin.setAttribute("class", "deleteBtn far fa-trash-alt");
+//     bin.setAttribute("id", `${task._id}`);
+//     newLi.appendChild(todo);
+//     newLi.appendChild(bin);
+//     todoList.appendChild(newLi);
+//     inputField.value = "";
+//     return newLi;
+//     });
+// };
+
 //eventListeners
 addBtn.addEventListener("click", addTaskToDom);
+postNewTask();
 
 //todoContent = task.description hoe later te veranderen????
 
