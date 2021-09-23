@@ -10,6 +10,7 @@ const getData = async () => {
             }
         });
         const data = await response.json();
+        console.log(data);
         return data;
     } catch (error) {
         console.log(error);
@@ -17,25 +18,23 @@ const getData = async () => {
 };
 
 //POST request
-const postTask = async () => {
-    
-    const task = {description: "go to the gym", done: false};
+const postTask = async (todo) => {
+   
+    // const task = {description: "go to the gym", done: false};
     
     try {
         const res = await fetch(url, {
             method: "POST",
-            body: JSON.stringify(task),
+            body: JSON.stringify(todo),
             headers: {
                 "Content-Type": "application/json",
             },
         });
-        const dataTask = await res.json();
-        return dataTask;
+        const result= await res.json();
+        return result;
     } catch (error) {
         console.log("Task is niet aangekomen" + error);
     }
 };
 
-//2 nieuwe taak naar database met POST request
-//const task = {description: "buy oatmeal", done: false};
-//newTask = task.description
+
