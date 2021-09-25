@@ -44,3 +44,18 @@ const deleteTaskAPI = async (id) => {
         console.log("Task is not deleted!" + error);
     }
 };
+
+//PUT request
+const UpdateTask = async (id) => {
+    try {
+        const response = await fetch(`${url}/${id}`, { 
+            method: "PUT",
+            body: JSON.stringify(change), //variabele (of andere) die ik straks maak in script.js
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+    } catch (error) {
+        console.log("Task is not updated!" + error);
+    }
+};

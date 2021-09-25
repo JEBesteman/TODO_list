@@ -51,3 +51,16 @@ ul li {
   border: 1px solid black;
   padding: 5px 10px;
 }
+
+.check {
+  flex: none;
+}
+
+span {
+  margin-left: 10px;
+  flex: auto;
+}
+
+.lineThrough {
+  text-decoration: line-through;
+}
