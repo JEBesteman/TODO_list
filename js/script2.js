@@ -11,31 +11,33 @@ const addTaskToDom = async () => {
     console.log("this is the description; ", todo.description);
     const newLi = document.createElement("li");
     const todoText = document.createElement("span");
-    todoText.innerHTML = todo.description;
+    const textNode = document.createTextNode(todo.description); //ipv innerHTML
     const bin = document.createElement("i");
     newLi.setAttribute("id", todo._id);
     bin.setAttribute("class", "deleteBtn far fa-trash-alt");
     bin.setAttribute("id", todo._id);
     bin.addEventListener("click", removeTask);
+    todoText.appendChild(textNode);
     newLi.appendChild(todoText);
     newLi.appendChild(bin);
     todoList.appendChild(newLi);
     });
 };
 
-addTaskToDom();
+
 //eventListeners
 
 const postNewTask = async () => {
     const todo = {description: inputField.value, done: false};
     await postTask(todo);
-    await addTaskToDom(todo);  
+    await addTaskToDom(todo);    
     inputField.value = "";
 };
 
-addBtn.addEventListener("click", () => {
+addBtn.addEventListener("click", (e) => {
+    e.preventDefault();
     postNewTask();
-    window.location.reload();
+    window.location.reload();  
 });
 
 const removeTask = async (e) => {
@@ -46,7 +48,7 @@ const removeTask = async (e) => {
 };
 
 
-
+addTaskToDom();
 
 
 
