@@ -1,77 +1,62 @@
 //UI rest code
 const todoList = document.getElementById("todoList");
-const inputField = document.getElementById("taskInput");
+const inputField = document.querySelector("#taskInput");
 const addBtn = document.getElementById("addTaskBtn");
 const deleteBtn = document.getElementsByClassName("deleteBtn");
 
-
-// const getAllTasks = async () => {
-//     const tasks = await getData();
-//     return tasks;
-// };
-
-// getAllTasks();
-
-
-const postNewTask = async () => {
-    const newTodo = await postTask();
-    return newTodo;  
-};
-// postNewTask(); 
-
-// //add task to list 
-// const addTaskToDom = (task) => {
-//     const newLi = document.createElement("li");
-//     const todo = document.createElement("span");
-//     todo.textContent = inputField.value;
-//     //todo.textContent = task.description hoe later te veranderen????
-//     const bin = document.createElement("i");
-//     newLi.setAttribute("id", task._id)//koppelen aan id request
-//     bin.setAttribute("class", "deleteBtn far fa-trash-alt");
-//     bin.setAttribute("id", task._id);
-//     newLi.appendChild(todo);
-//     newLi.appendChild(bin);
-//     todoList.appendChild(newLi);
-//     inputField.value = "";
-//     return newLi;
-// };
-   
-
-//voegt wel toe aan lijst maar li id = undefined.....
-
-//werkt niet
 const addTaskToDom = async () => {
-    const tasks = await getData();
-    tasks.forEach(task =>  {
+    const todos = await getData();
+    
+    todos.forEach(todo =>  {
+    console.log("this is the description; ", todo.description);
     const newLi = document.createElement("li");
-    const todo = document.createElement("span");
-    todo.textContent = task.description;
-    //todo.textContent = task.description hoe later te veranderen????
+    const todoText = document.createElement("span");
+    const textNode = document.createTextNode(todo.description); //ipv innerHTML
     const bin = document.createElement("i");
-    newLi.setAttribute("id", `${task._id}`)//koppelen aan id request
+    newLi.setAttribute("id", todo._id);
     bin.setAttribute("class", "deleteBtn far fa-trash-alt");
-    bin.setAttribute("id", `${task._id}`);
-    newLi.appendChild(todo);
+    bin.setAttribute("id", todo._id);
+    bin.addEventListener("click", removeTask);
+    todoText.appendChild(textNode);
+    newLi.appendChild(todoText);
     newLi.appendChild(bin);
     todoList.appendChild(newLi);
-    inputField.value = "";
-    return newLi;
     });
 };
 
-//eventListeners
-addBtn.addEventListener("click", addTaskToDom);
-// postNewTask();
 
-//todoContent = task.description hoe later te veranderen????
+const postNewTask = async () => {
+    const todo = {description: inputField.value, done: false};
+    await postTask(todo);
+    await addTaskToDom(todo);    
+    inputField.value = "";
+};
 
-//remove tasks from list!
+addBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    postNewTask();
+    window.location.reload();  
+});
 
 const removeTask = async (e) => {
-    const taskToRemove = e.target.parentElement;
-    taskToRemove.parentElement.removeChild(taskToRemove); 
-}
+    const taskToRemove = e.target.parentNode;
+    const id = taskToRemove.getAttribute("id", "todo_id");
+    taskToRemove.remove(); 
+    await deleteTaskAPI(id);
+};
 
-todoList.addEventListener("click", removeTask);
+addTaskToDom();
 
-//werkt!!
+
+
+
+
+
+
+
+
+
+
+
+
+
