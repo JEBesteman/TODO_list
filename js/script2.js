@@ -1,66 +1,63 @@
 //UI rest code
 const todoList = document.getElementById("todoList");
-const inputField = document.getElementById("taskInput");
+const inputField = document.querySelector("#taskInput");
 const addBtn = document.getElementById("addTaskBtn");
 const deleteBtn = document.getElementsByClassName("deleteBtn");
 
 const addTaskToDom = async () => {
     const todos = await getData();
-    console.log(todos);
+    
     todos.forEach(todo =>  {
+    console.log("this is the description; ", todo.description);
     const newLi = document.createElement("li");
     const todoText = document.createElement("span");
-    todoText.textContent = todo.description;
+    todoText.innerHTML = todo.description;
     const bin = document.createElement("i");
     newLi.setAttribute("id", todo._id);
     bin.setAttribute("class", "deleteBtn far fa-trash-alt");
     bin.setAttribute("id", todo._id);
+    bin.addEventListener("click", removeTask);
     newLi.appendChild(todoText);
     newLi.appendChild(bin);
     todoList.appendChild(newLi);
-    inputField.value = "";
     });
 };
 
+addTaskToDom();
 //eventListeners
 
-
 const postNewTask = async () => {
-    const todo = {decription: inputField.value, done: false};
+    const todo = {description: inputField.value, done: false};
     await postTask(todo);
-    // const newTodo = await postTask(todo);
-    // console.log(newTodo);
-    addTaskToDom();
-    // await addTaskToDom();
+    await addTaskToDom(todo);  
+    inputField.value = "";
 };
 
-addBtn.addEventListener("click", postNewTask);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//remove tasks from list!
+addBtn.addEventListener("click", () => {
+    postNewTask();
+    window.location.reload();
+});
 
 const removeTask = async (e) => {
-    const taskToRemove = e.target.parentElement;
-    taskToRemove.parentElement.removeChild(taskToRemove); 
-}
+    const taskToRemove = e.target.parentNode;
+    const id = taskToRemove.getAttribute("id", "todo_id");
+    taskToRemove.remove(); 
+    await deleteTaskAPI(id);
+};
 
-todoList.addEventListener("click", removeTask);
 
-//werkt!!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

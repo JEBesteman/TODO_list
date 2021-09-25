@@ -19,9 +19,6 @@ const getData = async () => {
 
 //POST request
 const postTask = async (todo) => {
-   
-    // const task = {description: "go to the gym", done: false};
-    
     try {
         const res = await fetch(url, {
             method: "POST",
@@ -30,11 +27,20 @@ const postTask = async (todo) => {
                 "Content-Type": "application/json",
             },
         });
-        const result= await res.json();
+        const result = await res.json();
         return result;
     } catch (error) {
         console.log("Task is niet aangekomen" + error);
     }
 };
 
-
+//DELETE request
+const deleteTaskAPI = async (id) => {
+    try {
+        const response = await fetch(`${url}/${id}`, { 
+            method: "DELETE"
+        });
+    } catch (error) {
+        console.log("Task is not deleted!" + error);
+    }
+};
