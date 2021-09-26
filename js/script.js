@@ -31,7 +31,8 @@ const addTaskToDom = async () => {
 
     if(todo.done) {
         checkbox.checked = true;
-        newLi.classList.add("checked"); 
+        newLi.classList.add("checked");         
+        todoText.classList.add("lineThrough");
     }
   });
 };
@@ -65,6 +66,7 @@ const changeStatusTask = async (e) => {
 
   if (target.checked) {  
     target.nextElementSibling.classList.add("lineThrough"); //nextElementSibling, anders streep door removeBtn
+    console.log(target.nextElementSibling);
     let change = {description: text, done: true };
     await updateTask(id, change);
     console.log(update);
