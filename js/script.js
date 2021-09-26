@@ -2,17 +2,15 @@
 const todoList = document.getElementById("todoList");
 const inputField = document.querySelector("#taskInput");
 const addBtn = document.getElementById("addTaskBtn");
-const deleteBtn = document.getElementsByClassName("deleteBtn");
-// const checkbox = document.querySelector(".checkbox");
 
 const addTaskToDom = async () => {
   const todos = await getData();
 
   todos.forEach((todo) => {
-    console.log("this is the description; ", todo.description);
+    // console.log("this is the description; ", todo.description);
     const newLi = document.createElement("li");
     const todoText = document.createElement("span");
-    const textNode = document.createTextNode(todo.description); //ipv innerHTML
+    const textNode = document.createTextNode(todo.description); 
     const bin = document.createElement("i");
     const checkbox = document.createElement("input");
     newLi.setAttribute("id", todo._id);
@@ -37,6 +35,9 @@ const addTaskToDom = async () => {
   });
 };
 
+addTaskToDom();
+
+//add task
 const postNewTask = async () => {
   const todo = { description: inputField.value, done: false };
   await postTask(todo);
@@ -44,21 +45,31 @@ const postNewTask = async () => {
   inputField.value = "";
 };
 
-addBtn.addEventListener("click", (e) => {
-  postNewTask();
-  todoList.innerHTML = "";
+addBtn.addEventListener("click", () => {
+  if(inputField.value !== "") {
+    postNewTask();
+    todoList.innerHTML = "";
+  } else {
+    alert("Vul een nieuwe taak in!");
+  };
 });
 
+inputField.addEventListener("keyup", (e) => {
+  if (e.code === "Enter" && inputField.value !== "" ) {
+    postNewTask();
+    todoList.innerHTML = "";
+  } 
+});
+
+//delete
 const removeTask = async (e) => {
   const taskToRemove = e.target.parentNode;
   const id = taskToRemove.getAttribute("id");
-  taskToRemove.remove(); //of toch await?
+  taskToRemove.remove(); 
   await deleteTaskAPI(id);
 };
 
-addTaskToDom();
-
-// checkbox
+// checkbox change status
 const changeStatusTask = async (e) => {
   const target = e.target;
   const id = target.getAttribute("id");
@@ -66,43 +77,25 @@ const changeStatusTask = async (e) => {
 
   if (target.checked) {  
     target.nextElementSibling.classList.add("lineThrough"); //nextElementSibling, anders streep door removeBtn
-    console.log(target.nextElementSibling);
-    let change = {description: text, done: true };
+    const change = {description: text, done: true };
     await updateTask(id, change);
-    console.log(update);
-  } else {
+  } 
+  else {
     target.nextElementSibling.classList.remove("lineThrough");
-    let change = {description: text, done: false };
+    const change = {description: text, done: false };
     await updateTask(id, change);
-    console.log(update);
   };
 };
 
 
 
-
-//dan checked --> get id --> PUT body done: true met gekoppelde id //if else??
-//unchecked --> get id --> put body done: false
-//of  const ?? = checked.status --> PUT body done: checked.status
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//aanpassen taak --> met PUT body: description: aanpassing
-//edit button maken en edit field?
+//aanpassen taak --> met PUT body: description: aanpassing, id koppelen
+//edit button maken en edit field? edit button in inputField en save en "exit" button in edit field
 //of click event op span/textNode zetten en textNode als edit field maken. Hoe?? mogelijk??
 //functie maken -> lege array niet aanpassen --> ook in forEach gedeelte
 //aanpassing opslaan in new Description? OF new Headers en new Body gebruiken in PUT request om samen te voegen?
+//editField.value = inputFIeld.value = desription
+//key up/down met enter om editField te committen?
 
 
 
