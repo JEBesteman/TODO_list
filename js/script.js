@@ -56,14 +56,17 @@ addTaskToDom();
 const changeStatusTask = async (e) => {
   const target = e.target;
   const id = target.getAttribute("id");
+
+  const text = target.nextElementSibling.textContent;
   
+
   if (target.checked) {
     target.nextElementSibling.classList.add("lineThrough"); //nextElementSibling, anders streep door removeBtn
-    const change = {description: todo.description, done: true };
-    setTaskDone(id, change);
+    const change = {description: text, done: true };
+    await updateTask(id, change);
   } else {
     target.nextElementSibling.classList.remove("lineThrough");
-    let change = { done: false };
+    let change = {description: text, done: false };
     await updateTask(id, change);
   };
 
