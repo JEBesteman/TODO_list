@@ -3,11 +3,12 @@ const todoList = document.getElementById("todoList");
 const inputField = document.querySelector("#taskInput");
 const addBtn = document.getElementById("addTaskBtn");
 const deleteBtn = document.getElementsByClassName("deleteBtn");
+// const checkbox = document.querySelector(".checkbox");
 
 const addTaskToDom = async () => {
-    const todos = await getData();
-    
-    todos.forEach(todo =>  {
+  const todos = await getData();
+
+  todos.forEach((todo) => {
     console.log("this is the description; ", todo.description);
     const newLi = document.createElement("li");
     const todoText = document.createElement("span");
@@ -19,46 +20,74 @@ const addTaskToDom = async () => {
     bin.setAttribute("id", todo._id);
     bin.addEventListener("click", removeTask);
     checkbox.setAttribute("type", "checkbox");
-    checkbox.setAttribute("class", "check");
-    // checkbox.addEventListener("change", changeStatusTask);
+    checkbox.setAttribute("class", "checkbox");
+    checkbox.setAttribute("id", todo._id);
+    checkbox.addEventListener("change", changeStatusTask);
     todoText.appendChild(textNode);
     newLi.appendChild(checkbox);
     newLi.appendChild(todoText);
     newLi.appendChild(bin);
     todoList.appendChild(newLi);
-    });
+  });
 };
 
-
 const postNewTask = async () => {
-    const todo = {description: inputField.value, done: false};
-    await postTask(todo);
-    await addTaskToDom(todo);    
-    inputField.value = "";
+  const todo = { description: inputField.value, done: false };
+  await postTask(todo);
+  await addTaskToDom(todo);
+  inputField.value = "";
 };
 
 addBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    postNewTask();
-    window.location.reload();  //is dit de beste oplossing voor dubbele lijst te voorkomen?
+  postNewTask();
+  todoList.innerHTML = "";
 });
 
 const removeTask = async (e) => {
-    const taskToRemove = e.target.parentNode;
-    const id = taskToRemove.getAttribute("id");
-    taskToRemove.remove(); //of toch await?
-    await deleteTaskAPI(id);
+  const taskToRemove = e.target.parentNode;
+  const id = taskToRemove.getAttribute("id");
+  taskToRemove.remove(); //of toch await?
+  await deleteTaskAPI(id);
 };
 
 addTaskToDom();
 
-//functie checkbox -> const changeStatusTask = async(e) => {} ?
-//checken of checkbox unchecked of checked is
-//checked -> (newLi).classList.add(lineThrough)
+// checkbox
+const changeStatusTask = async (e) => {
+  const target = e.target;
+  const id = target.getAttribute("id");
+  
+  if (target.checked) {
+    target.nextElementSibling.classList.add("lineThrough"); //nextElementSibling, anders streep door removeBtn
+    const change = {description: todo.description, done: true };
+    setTaskDone(id, change);
+  } else {
+    target.nextElementSibling.classList.remove("lineThrough");
+    let change = { done: false };
+    await updateTask(id, change);
+  };
+
+};
+
+
+
+
 //dan checked --> get id --> PUT body done: true met gekoppelde id //if else??
 //unchecked --> get id --> put body done: false
 //of  const ?? = checked.status --> PUT body done: checked.status
-//localStorage of cookies nodig om checked checkbox te bewaren na refresh pagina??
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //aanpassen taak --> met PUT body: description: aanpassing
 //edit button maken en edit field?
