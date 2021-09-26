@@ -28,6 +28,11 @@ const addTaskToDom = async () => {
     newLi.appendChild(todoText);
     newLi.appendChild(bin);
     todoList.appendChild(newLi);
+
+    if(todo.done) {
+        checkbox.checked = true;
+        newLi.classList.add("checked"); 
+    }
   });
 };
 
@@ -56,20 +61,19 @@ addTaskToDom();
 const changeStatusTask = async (e) => {
   const target = e.target;
   const id = target.getAttribute("id");
-
   const text = target.nextElementSibling.textContent;
-  
 
-  if (target.checked) {
+  if (target.checked) {  
     target.nextElementSibling.classList.add("lineThrough"); //nextElementSibling, anders streep door removeBtn
-    const change = {description: text, done: true };
+    let change = {description: text, done: true };
     await updateTask(id, change);
+    console.log(update);
   } else {
     target.nextElementSibling.classList.remove("lineThrough");
     let change = {description: text, done: false };
     await updateTask(id, change);
+    console.log(update);
   };
-
 };
 
 

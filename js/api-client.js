@@ -47,12 +47,13 @@ const updateTask = async (id, change) => {
   try {
     const response = await fetch(`${url}/${id}`, {
       method: "PUT",
-      body: JSON.stringify(change), //variabele (of andere) die ik straks maak in script.js
+      body: JSON.stringify(change),
       headers: {
         "Content-Type": "application/json",
       },
     });
-    return result = await response.json();
+    return update = await response.json();
+   
   } catch (error) {
     console.log("Task is not updated!" + error);
   }
