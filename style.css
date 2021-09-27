@@ -30,6 +30,10 @@ nav input {
   cursor: pointer;
 }
 
+.fa-edit {
+  color: blue;
+}
+
 .list-container {
   display: flex;
   justify-content: center;
@@ -39,7 +43,7 @@ nav input {
 }
 
 ul {
-  min-width: 350px;
+  min-width: 500px;
   background-color: beige;
 }
 
