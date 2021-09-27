@@ -85,7 +85,7 @@ const changeStatusTask = async (e) => {
   const id = target.getAttribute("id");
 
   if (target.checked) {  
-    target.nextElementSibling.classList.add("lineThrough"); 
+    target.nextElementSibling.classList.add("lineThrough"); //nextElementSibling, anders streep door removeBtn
     const change = {done: true };
     updateTask(id, change);
   } 
@@ -100,19 +100,43 @@ const changeStatusTask = async (e) => {
 let toggle = true;
 let editField;
 const editTask = async (e) => {
-  const target = e.target; 
-  const taskItem = target.previousElementSibling;
-  const taskItemText = taskItem.innerHTML;
-
+  const target = e.target; //
+  const span = target.previousElementSibling;
+  const spanText = span.innerHTML;
   if(toggle){
-    editField =
-    `<input type="text" class="editField">
-    <input type="submit" class="saveEdit" value="Edit Task">`;
+    editField = 
+    // `<input type="text" class="editField" placeholder=${spanText} value=${spanText}>
+    `<input type="text" class="editField" placeholder=${spanText} id="1" value=${spanText}>
+    <input type="submit" id="saveEdit" value="Edit Task">`;
     
-    const saveEdit = document.querySelector(".saveEdit");
+    span.innerHTML = editField;
+    const saveEdit = document.querySelector("#saveEdit");
     toggle = false;
-  
-    // saveEdit.addEventListener("click", () =>  edit(target.id, document.getElementById("1").value, taskItem));
-    saveEdit.addEventListener("click", () =>  edit(target.id, document.querySelector(".editField").value, taskItem));
-}};
+ 
+    saveEdit.addEventListener("click", () =>  edit(target.id, document.getElementById("1").value, span));
+    // saveEdit.addEventListener("click", () =>  edit(target.id, document.querySelector(".editField").value, span));
+
+}}
+
+const edit = (id, value, span) => {
+  span.innerHTML = value; 
+  toggle = true;
+  const change = {description: value};
+  updateTask(id, change);
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
