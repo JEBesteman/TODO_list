@@ -52,8 +52,7 @@ const updateTask = async (id, change) => {
         "Content-Type": "application/json",
       },
     });
-    return update = await response.json();
-   
+    return update = await response.json(); 
   } catch (error) {
     console.log("Task is not updated!" + error);
   }

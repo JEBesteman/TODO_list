@@ -83,58 +83,46 @@ const removeTask = async (e) => {
 const changeStatusTask = async (e) => {
   const target = e.target;
   const id = target.getAttribute("id");
-  const text = target.nextElementSibling.textContent;
 
   if (target.checked) {  
-    target.nextElementSibling.classList.add("lineThrough"); //nextElementSibling, anders streep door removeBtn
-    const change = {description: text, done: true };
+    target.nextElementSibling.classList.add("lineThrough"); 
+    const change = {done: true };
     updateTask(id, change);
   } 
   else {
     target.nextElementSibling.classList.remove("lineThrough");
-    const change = {description: text, done: false };
+    const change = {done: false };
     updateTask(id, change);
   };
 };
 
 //edit
-//eerst editfield tonen
+let toggle = true;
+let editField;
+
 const editTask = async (e) => {
-  const target = e.target; //editBtn
-  const span = target.previousElementSibling;
-  const spanText = span.innerHTML;
-  const editField = 
-    `<input type="text" class="editField" placeholder=${spanText} id=${target.id}>
-    <input type="submit" id="saveEdit" value="Edit Task">`;
-  span.innerHTML = editField;
-}
+  const target = e.target; 
+  const taskItem = target.previousElementSibling;
+  const taskItemText = taskItem.innerHTML;
 
-const saveEditBtn = document.querySelector("saveEdit"); //null
-console.log(saveEditBtn);
-//eerst editfield aanmaken
+  if(toggle){
+    editField = 
+    // `<input type="text" class="editField" placeholder=${taskItemText} id="1" value=${taskItemText}>
+    `<input type="text" class="editField" placeholder=${taskItemText} value=${taskItemText}>
+    <input type="submit" class="saveEdit" value="Edit Task">`;
+    taskItem.innerHTML = editField;
+    console.log(taskItemText); //go to home
+    const saveEdit = document.querySelector(".saveEdit");
+    toggle = false;
+    console.log(document.querySelector(".editField").value); //go
+    // saveEdit.addEventListener("click", () => edit(target.id, document.getElementById("1").value, taskItem));
+    saveEdit.addEventListener("click", () => edit(target.id, document.querySelector(".editField").value, taskItem));
+}};
 
-
-//toggle op editBtn -> wel of niet tonen van editField
-//met editTask button submitten (addEventListener) --> editField.value = description voor PUT en nieuwe textNode hoe??
-//hoe zit het met checked status? in functie meenemen? isChecked = checkbox.checked of zoiets?
-//weet even niet hoe aan te passen in put request...
-
-//aanpassen taak --> met PUT body: description: aanpassing, id koppelen
-
-//functie maken -> lege array niet aanpassen 
-//aanpassing opslaan in new Description? OF new Headers en new Body gebruiken in PUT request om samen te voegen?
-//editField.value = inputFIeld.value = description
-
-
-
-
-
-
-
-
-
-
-
-
-
+const edit = (id, value, taskItem) => {
+  taskItem.innerHTML = value; 
+  toggle = true;
+  const change = {description: value};
+  updateTask(id, change);
+};
 
