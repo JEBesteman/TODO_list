@@ -105,27 +105,14 @@ const editTask = async (e) => {
   const taskItemText = taskItem.innerHTML;
 
   if(toggle){
-    editField = 
+    editField =
     `<input type="text" class="editField">
     <input type="submit" class="saveEdit" value="Edit Task">`;
-    taskItem.innerHTML = editField;
+    
     const saveEdit = document.querySelector(".saveEdit");
-   
     toggle = false;
   
-    saveEdit.addEventListener("click", () => {
-      // console.log("hello");
-      const value = document.querySelector(".editField").value;
-      console.log(value);
-      taskItem.innerHTML = value; 
-      if(value !== "") {
-        toggle = true;
-        const change = {description: value};
-        updateTask(target.id, change);
-        console.log(data);
-      }else { alert("Sorry, je mag geen lege taak invullen!");
-        window.location.reload();
-      }
-    });
-  };
-};
+    // saveEdit.addEventListener("click", () =>  edit(target.id, document.getElementById("1").value, taskItem));
+    saveEdit.addEventListener("click", () =>  edit(target.id, document.querySelector(".editField").value, taskItem));
+}};
+
