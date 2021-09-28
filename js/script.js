@@ -23,14 +23,11 @@ const addTaskToDom = async () => {
     const editBtn = document.createElement("i");
     newLi.setAttribute("id", todo._id);
     bin.setAttribute("class", "deleteBtn far fa-trash-alt");
-    bin.setAttribute("id", todo._id);
     bin.addEventListener("click", removeTask);
     checkbox.setAttribute("type", "checkbox");
     checkbox.setAttribute("class", "checkbox");
-    checkbox.setAttribute("id", todo._id);
     checkbox.addEventListener("change", changeStatusTask);
     editBtn.setAttribute("class", "editBtn far fa-edit");
-    editBtn.setAttribute("id", todo._id);
     editBtn.addEventListener("click", editTask);
     todoText.appendChild(textNode);
     newLi.appendChild(checkbox);
@@ -82,14 +79,13 @@ const removeTask = async (e) => {
 // checkbox change status
 const changeStatusTask = async (e) => {
   const target = e.target;
-  const id = target.getAttribute("id");
+  const id = target.parentNode.getAttribute("id");
 
   if (target.checked) {  
     target.nextElementSibling.classList.add("lineThrough"); 
     const change = {done: true };
     updateTask(id, change);
-  } 
-  else {
+  } else {
     target.nextElementSibling.classList.remove("lineThrough");
     const change = {done: false };
     updateTask(id, change);
@@ -103,6 +99,7 @@ const editTask = async (e) => {
   const target = e.target; 
   const taskItem = target.previousElementSibling;
   const taskItemText = taskItem.innerHTML;
+  const id = target.parentNode.getAttribute("id");
 
   if(toggle){
     editField = 
@@ -110,20 +107,19 @@ const editTask = async (e) => {
     <input type="submit" class="saveEdit" value="Edit Task">`;
     taskItem.innerHTML = editField;
     const saveEdit = document.querySelector(".saveEdit");
-   
     toggle = false;
   
     saveEdit.addEventListener("click", () => {
       // console.log("hello");
       const value = document.querySelector(".editField").value;
-      console.log(value);
+      // console.log(value);
       taskItem.innerHTML = value; 
+
       if(value !== "") {
         toggle = true;
         const change = {description: value};
-        updateTask(target.id, change);
-        console.log(data);
-      }else { alert("Sorry, je mag geen lege taak invullen!");
+        updateTask(id, change);
+      } else { alert("Sorry, je mag geen lege taak invullen!");
         window.location.reload();
       }
     });
