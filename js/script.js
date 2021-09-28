@@ -14,7 +14,6 @@ const addTaskToDom = async () => {
   const todos = await getData();
 
   todos.forEach((todo) => {
-    // console.log("this is the description; ", todo.description);
     const newLi = document.createElement("li");
     const todoText = document.createElement("span");
     const textNode = document.createTextNode(todo.description); 
@@ -40,7 +39,7 @@ const addTaskToDom = async () => {
         checkbox.checked = true;
         newLi.classList.add("checked");         
         todoText.classList.add("lineThrough");
-    }
+    };
   });
 };
 
@@ -78,15 +77,15 @@ const removeTask = async (e) => {
 
 // checkbox change status
 const changeStatusTask = async (e) => {
-  const target = e.target;
-  const id = target.parentNode.getAttribute("id");
+  const checkBox = e.target;
+  const id = checkBox.parentNode.getAttribute("id");
 
-  if (target.checked) {  
-    target.nextElementSibling.classList.add("lineThrough"); 
+  if (checkBox.checked) {  
+    checkBox.nextElementSibling.classList.add("lineThrough"); 
     const change = {done: true };
     updateTask(id, change);
   } else {
-    target.nextElementSibling.classList.remove("lineThrough");
+    checkBox.nextElementSibling.classList.remove("lineThrough");
     const change = {done: false };
     updateTask(id, change);
   };
@@ -110,18 +109,17 @@ const editTask = async (e) => {
     toggle = false;
   
     saveEdit.addEventListener("click", () => {
-      // console.log("hello");
+
       const value = document.querySelector(".editField").value;
-      // console.log(value);
       taskItem.innerHTML = value; 
 
-      if(value !== "") {
+      if(value) {
         toggle = true;
         const change = {description: value};
         updateTask(id, change);
       } else { alert("Sorry, je mag geen lege taak invullen!");
         window.location.reload();
-      }
+      };
     });
   };
 };
