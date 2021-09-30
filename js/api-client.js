@@ -1,5 +1,6 @@
 //alle request
 const url = "http://localhost:3000";
+
 //GET Request
 const getData = async () => {
   try {
@@ -9,6 +10,9 @@ const getData = async () => {
         "Content-Type": "application/json",
       },
     });
+    if (response.ok) {
+      console.log(response.status); //200
+    }
     return await response.json();
   } catch (error) {
     console.log(error);
@@ -25,6 +29,9 @@ const postTask = async (todo) => {
         "Content-Type": "application/json",
       },
     });
+    if (res.ok) {
+      console.log(res.status); //201
+    }
     return await res.json();
   } catch (error) {
     console.log("Task is niet aangekomen" + error);
@@ -37,6 +44,9 @@ const deleteTaskAPI = async (id) => {
     const response = await fetch(`${url}/${id}`, {
       method: "DELETE",
     });
+    if (response.ok) {
+      console.log(response.status); //204
+    }
   } catch (error) {
     console.log("Task is not deleted!" + error);
   }
@@ -52,6 +62,9 @@ const updateTask = async (id, change) => {
         "Content-Type": "application/json",
       },
     });
+    if (response.ok) {
+      console.log(response.status); //200
+    }
     return await response.json(); 
   } catch (error) {
     console.log("Task is not updated!" + error);
