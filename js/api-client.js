@@ -9,7 +9,7 @@ const getData = async () => {
         "Content-Type": "application/json",
       },
     });
-    return data = await response.json();
+    return await response.json();
   } catch (error) {
     console.log(error);
   }
@@ -25,7 +25,7 @@ const postTask = async (todo) => {
         "Content-Type": "application/json",
       },
     });
-    return result = await res.json();
+    return await res.json();
   } catch (error) {
     console.log("Task is niet aangekomen" + error);
   }
@@ -52,7 +52,7 @@ const updateTask = async (id, change) => {
         "Content-Type": "application/json",
       },
     });
-    return update = await response.json(); 
+    return await response.json(); 
   } catch (error) {
     console.log("Task is not updated!" + error);
   }

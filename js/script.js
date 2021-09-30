@@ -3,13 +3,6 @@ const todoList = document.getElementById("todoList");
 const inputField = document.querySelector("#taskInput");
 const addBtn = document.getElementById("addTaskBtn");
 
-const getTasks = async () => {
-  const todos = await getData();
-  addTaskToDom(todos);
-};
-
-getTasks();
-
 const addTaskToDom = async () => {
   const todos = await getData();
 
@@ -39,15 +32,17 @@ const addTaskToDom = async () => {
         checkbox.checked = true;
         newLi.classList.add("checked");         
         todoText.classList.add("lineThrough");
-    };
+    }
   });
 };
+
+addTaskToDom();
 
 //add task
 const postNewTask = async () => {
   const todo = { description: inputField.value, done: false };
   await postTask(todo);
-  await addTaskToDom(todo);
+  await addTaskToDom();
   inputField.value = "";
 };
 
@@ -57,14 +52,14 @@ addBtn.addEventListener("click", () => {
     todoList.innerHTML = "";
   } else {
     alert("Vul een nieuwe taak in!");
-  };
+  }
 });
 
 inputField.addEventListener("keyup", (e) => {
   if (e.code === "Enter" && inputField.value !== "" ) {
     postNewTask();
     todoList.innerHTML = "";
-  } return;
+  }
 });
 
 //delete
@@ -88,7 +83,7 @@ const changeStatusTask = async (e) => {
     checkBox.nextElementSibling.classList.remove("lineThrough");
     const change = {done: false };
     updateTask(id, change);
-  };
+  }
 };
 
 //edit
@@ -119,7 +114,7 @@ const editTask = async (e) => {
         updateTask(id, change);
       } else { alert("Sorry, je mag geen lege taak invullen!");
         window.location.reload();
-      };
+      }
     });
-  };
+  }
 };
