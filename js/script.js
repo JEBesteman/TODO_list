@@ -92,7 +92,6 @@ let editField;
 const editTask = async (e) => {
   const target = e.target; 
   const taskItem = target.previousElementSibling;
-  const taskItemText = taskItem.innerHTML;
   const id = target.parentNode.getAttribute("id");
 
   if(toggle){
